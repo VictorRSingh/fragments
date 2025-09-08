@@ -27,4 +27,4 @@ npm run debug
 
 ```
 
-This will allow you run the server in debug mode. Attach in VSCode to be able to set breakpoints.
+This will allow you run the server in debug mode, similar to npm run dev, this will use the flags --watch and --inspect. Attach in VSCode to be able to set breakpoints.
