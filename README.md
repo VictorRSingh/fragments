@@ -7,9 +7,6 @@ Fragments API for BTI525
 Run
 
 ```
-Start Server
-```
-
 npm start
 
 ```
@@ -29,6 +26,5 @@ This will run the server in dev mode using the --watch flag to allow the server 
 npm run debug
 
 ```
-This will allow you run the server in debug mode. Attach in VSCode to be able to set breakpoints.
 
-```
+This will allow you run the server in debug mode. Attach in VSCode to be able to set breakpoints.
