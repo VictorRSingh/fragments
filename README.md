@@ -4,14 +4,14 @@ Fragments API for BTI525
 
 # How to use
 
-Run
+Run the any of the following commands to start the server
 
 ```
 npm start
 
 ```
 
-This will allow you to run the server on localhost:8080 and be able to received requests on the API
+This will allow you to run the server on localhost:8080 and be able to receive requests on the API
 
 ```
 
