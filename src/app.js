@@ -8,12 +8,18 @@ const compression = require('compression');
 const logger = require('./logger');
 const pino = require('pino-http')({ logger });
 
+const passport = require('passport');
+const authenticate = require('./auth');
+
 const app = express();
 
 app.use(pino);
 app.use(helmet());
 app.use(cors());
 app.use(compression());
+
+passport.use(authenticate.strategy());
+app.use(passport.initialize());
 
 // app.get('/', (req, res) => {
 //   res.setHeader('Cache-Type', 'no-cache');

@@ -4,9 +4,9 @@ const app = require('./app');
 const port = parseInt(process.env.PORT || '8080', 10);
 
 // Print Environment Variables in debug mode
-if (process.env.LOG_LEVEL === 'debug') {
-  console.log('Environment Variables:', process.env);
-}
+// if (process.env.LOG_LEVEL === 'debug') {
+//   console.log('Environment Variables:', process.env);
+// }
 
 const server = stoppable(
   app.listen(port, () => {
