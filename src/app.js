@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 
-const { author, version } = require('../package.json');
+// const { author, version } = require('../package.json');
 
 const logger = require('./logger');
 const pino = require('pino-http')({ logger });
@@ -19,7 +19,7 @@ app.use(cors());
 app.use(compression());
 
 passport.use(authenticate.strategy());
-app.use(passport.initialize());
+app.use(passport.initialize()); 
 
 // app.get('/', (req, res) => {
 //   res.setHeader('Cache-Type', 'no-cache');
