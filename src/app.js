@@ -5,6 +5,8 @@ const compression = require('compression');
 
 // const { author, version } = require('../package.json');
 
+const { createErrorResponse } = require('./response');
+
 const logger = require('./logger');
 const pino = require('pino-http')({ logger });
 
@@ -52,13 +54,12 @@ app.use((err, req, res, next) => {
     logger.error({ err }, 'Error processing request');
   }
 
-  res.status(status).json({
-    status: 'error',
-    error: {
-      message,
+  res.status(status).json(
+    createErrorResponse({
       code: status,
-    },
-  });
+      message,
+    })
+  );
 });
 
 module.exports = app;
