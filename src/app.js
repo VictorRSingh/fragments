@@ -7,6 +7,8 @@ const compression = require('compression');
 
 const { createErrorResponse } = require('./response');
 
+const unusedVar = 'test';
+
 const logger = require('./logger');
 const pino = require('pino-http')({ logger });
 
