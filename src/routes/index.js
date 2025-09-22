@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
       author,
       version,
       githubUrl: 'https://github.com/VictorRSingh/fragments',
+      fragments: []
     });
 });
 module.exports = router;
