@@ -1,7 +1,6 @@
 
 // Successful response returns status: ok
 
-// eslint-disable-next-line no-unused-vars
 module.exports.createSuccessResponse = function (data) {
     return {
         status: 'ok',
