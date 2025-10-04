@@ -51,7 +51,7 @@ describe('memory', () => {
   test('Get list of fragment ids for a given user(ownerId) from memory db when expanded is true', async () => {
     const ownerId = 'a';
     const result = await listFragments(ownerId, true);
-    expect(result).toEqual([JSON.stringify({ ownerId: 'a', id: 'b' })]);
+    expect(result).toEqual([{ ownerId: 'a', id: 'b' }]);
   });
 
   test('Delete a fragments metadata and data from memory db', async () => {
