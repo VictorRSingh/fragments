@@ -1,7 +1,6 @@
 const auth = require('http-auth');
 const passport = require('passport');
 const authPassport = require('http-auth-passport');
-
 const logger = require('../logger');
 
 if (!process.env.HTPASSWD_FILE) {

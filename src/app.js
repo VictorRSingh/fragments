@@ -23,15 +23,6 @@ app.use(compression());
 passport.use(authenticate.strategy());
 app.use(passport.initialize()); 
 
-// app.get('/', (req, res) => {
-//   res.setHeader('Cache-Type', 'no-cache');
-
-//   res.status(200).json({
-//     status: 'ok',
-//     author,
-//     version,
-//     githubUrl: 'https://github.com/VictorRSingh/fragments',
-//   });
 
 app.use('/', require('./routes'));
 
