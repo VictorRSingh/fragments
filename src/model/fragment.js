@@ -13,6 +13,7 @@ const {
   listFragments,
   deleteFragment,
 } = require('./data');
+const logger = require('../logger');
 
 const supportedTypes = ['text/plain'];
 
@@ -44,6 +45,8 @@ class Fragment {
     this.updated = updated ?? new Date().toISOString();
     this.type = type;
     this.size = size;
+
+    logger.info(`User ${this.ownerId} created fragment ${this.id} of type ${this.type} and size ${this.size}`);
   }
 
   /**
@@ -66,6 +69,7 @@ class Fragment {
   static async byId(ownerId, id) {
     const fragment = await readFragment(ownerId, id);
     if(!fragment) {
+      logger.error(`Fragment ${id} for user ${ownerId} not found`);
       throw new Error('not found');
     }
     return new Fragment(fragment);
@@ -78,6 +82,7 @@ class Fragment {
    * @returns Promise<void>
    */
   static delete(ownerId, id) {
+    logger.info(`User ${ownerId} deleted fragment ${id}`);
     return deleteFragment(ownerId, id);
   }
 
@@ -86,8 +91,8 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    // TODO
     this.updated = new Date().toISOString();
+    logger.info(`Saving fragment ${this.id} for user ${this.ownerId}`);
     return writeFragment(this);
   }
 
@@ -106,6 +111,7 @@ class Fragment {
    */
   async setData(data) {
     // TIP: make sure you update the metadata whenever you change the data, so they match
+    logger.info(`Setting data for fragment ${this.id} for user ${this.ownerId}`);
     this.size = data.length;
     this.updated = new Date().toISOString();
     await writeFragmentData(this.ownerId, this.id, Buffer.from(data));
