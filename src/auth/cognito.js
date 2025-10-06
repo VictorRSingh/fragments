@@ -32,7 +32,7 @@ jwtVerifier
         try {
             const user = await jwtVerifier.verify(token);
             logger.debug({ user }, 'Verified user from token');
-            done(null, user);
+            done(null, user.email);
         } catch (err) {
             logger.error({ err }, 'Failed to verify user from token');
             done(null, false);
