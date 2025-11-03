@@ -35,4 +35,4 @@ ENV NPM_CONFIG_LOGLEVEL=warn
 
 ENV NPM_CONFIG_COLOR=false
 
-CMD npm run docker-start
+CMD ["npm", "run", "docker-start"]
