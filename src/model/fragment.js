@@ -15,7 +15,7 @@ const {
 } = require('./data');
 const logger = require('../logger');
 
-const supportedTypes = ['text/plain'];
+const supportedTypes = ['text/*', 'application/json'];
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
@@ -23,19 +23,19 @@ class Fragment {
       throw new Error('ownerId and type are required');
     }
 
-    if(!ownerId) {
+    if (!ownerId) {
       throw new Error('ownerId is required');
     }
 
-    if(!type) {
+    if (!type) {
       throw new Error('type is required');
     }
 
-    if(typeof size !== 'number' || size < 0) {
+    if (typeof size !== 'number' || size < 0) {
       throw new Error('size must be a number');
     }
 
-    if(!Fragment.isSupportedType(type)) {
+    if (!Fragment.isSupportedType(type)) {
       throw new Error('invalid type');
     }
 
@@ -46,7 +46,9 @@ class Fragment {
     this.type = type;
     this.size = size;
 
-    logger.info(`User ${this.ownerId} created fragment ${this.id} of type ${this.type} and size ${this.size}`);
+    logger.info(
+      `User ${this.ownerId} created fragment ${this.id} of type ${this.type} and size ${this.size}`
+    );
   }
 
   /**
@@ -68,7 +70,7 @@ class Fragment {
    */
   static async byId(ownerId, id) {
     const fragment = await readFragment(ownerId, id);
-    if(!fragment) {
+    if (!fragment) {
       logger.error(`Fragment ${id} for user ${ownerId} not found`);
       throw new Error('not found');
     }
@@ -133,7 +135,7 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    if(this.mimeType.startsWith('text/')) {
+    if (this.mimeType.startsWith('text/')) {
       return true;
     }
     return false;
@@ -153,10 +155,13 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    if (supportedTypes.includes(value.split(';')[0])) {
-      return true;
-    }
-    return false;
+    const mimeType = value.split(';')[0];
+    return supportedTypes.some((type) => {
+      if (type.endsWith('/*')) {
+        return mimeType.startsWith(type.split('/')[0] + '/');
+      }
+      return type === mimeType;
+    });
   }
 }
 
