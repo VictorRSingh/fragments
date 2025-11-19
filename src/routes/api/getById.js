@@ -6,20 +6,20 @@ module.exports = async (req, res) => {
     const fragmentId = req.params.id;
 
     // Find fragment by owner and ID
-    const fragment = await Fragment.getData(ownerId, fragmentId);
-    const fragmentMetaData = await Fragment.byId(ownerId, fragmentId);
+    const fragment = await Fragment.byId(ownerId, fragmentId);
 
-    
-    if (!fragment) {
+    const data = await fragment.getData();
+
+    if (!data) {
       return res.status(404).json({
         status: 'error',
         error: { code: 404, message: 'not found' }
       });
     }
     
-    res.setHeader('Content-Type', fragmentMetaData.type);
-    res.setHeader('Content-Length', Buffer.byteLength(fragment));
-    res.status(200).send(fragment);
+    res.setHeader('Content-Type', fragment.type);
+    res.setHeader('Content-Length', fragment.size);
+    res.status(200).send(data);
 
   } catch (err) {
     res.status(500).json({ status: 'error', message: err.message });
