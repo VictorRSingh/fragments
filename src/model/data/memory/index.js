@@ -35,12 +35,9 @@ function readFragmentData(ownerId, id) {
 async function listFragments(ownerId, expand = false) {
   const fragments = await metadata.query(ownerId);
 
-  if(!fragments) {
-    return [];
-  }
   // If we don't get anything back, or are supposed to give expanded fragments, return
-  if (expand) {
-    return fragments.map((fragment) => JSON.parse(fragment));
+  if (expand || !fragments) {
+    return fragments;
   }
 
   // Otherwise, map to only send back the ids

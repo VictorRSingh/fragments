@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
     logger.error('Request body is not a buffer');
     return res.status(415).json({ error: 'Unsupported Content-Type or empty body' });
   }
-
   const fragment = new Fragment({
     ownerId: req.user,
     type: req.get('Content-Type'),
@@ -21,9 +20,10 @@ module.exports = async (req, res) => {
   logger.info(`Base URL: ${baseUrl}`);
   let locationURL;
 
-  locationURL = new URL(`/v1/fragments/${fragment.id}`, baseUrl);
+  locationURL = new URL(`/v1/fragments/${fragment.id}`, baseUrl).toString();
 
   res.setHeader('Location', locationURL);
+
     res.status(201).json(
       createSuccessResponse({
         status: 'ok',

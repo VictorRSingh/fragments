@@ -19,7 +19,11 @@ const rawBody = () =>
   });
 
 
+// GET /v1/fragments
 router.get('/fragments', require('./get'));
+router.get('/fragments/:id', require('./getById'));
+
+// POST /v1/fragments
 router.post('/fragments', rawBody(), require('./post'));
 
 module.exports = router;

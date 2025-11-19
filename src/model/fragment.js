@@ -18,6 +18,13 @@ const logger = require('../logger');
 const supportedTypes = ['text/*', 'application/json'];
 
 class Fragment {
+  id = randomUUID();
+  ownerId;
+  created;
+  updated;
+  type;
+  size;
+
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
     if (!ownerId && !type) {
       throw new Error('ownerId and type are required');
@@ -32,7 +39,7 @@ class Fragment {
     }
 
     if (typeof size !== 'number' || size < 0) {
-      throw new Error('size must be a number');
+      throw new Error('size must be a number and not negative');
     }
 
     if (!Fragment.isSupportedType(type)) {
@@ -59,6 +66,15 @@ class Fragment {
    */
   static async byUser(ownerId, expand = false) {
     const fragments = await listFragments(ownerId, expand);
+
+    if (expand) {
+      return fragments.map((fragment) => {
+        // if it's a string, parse it
+        const f = typeof fragment === 'string' ? JSON.parse(fragment) : fragment;
+        return new Fragment(f);
+      });
+    }
+
     return fragments;
   }
 
@@ -102,8 +118,8 @@ class Fragment {
    * Gets the fragment's data from the database
    * @returns Promise<Buffer>
    */
-  getData() {
-    return readFragmentData(this.ownerId, this.id);
+  static async getData(ownerId, id) {
+    return readFragmentData(ownerId, id);
   }
 
   /**
