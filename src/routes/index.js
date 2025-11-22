@@ -1,5 +1,6 @@
-
 const express = require("express");
+
+const { hostname } = require("os");
 
 const { author, version } = require("../../package.json");
 
@@ -19,7 +20,8 @@ router.get('/', (req, res) => {
         author,
         version,
         githubUrl: 'https://github.com/VictorRSingh/fragments',
-        fragments: []
+        fragments: [],
+        hostname: hostname(),
       })
     );
 });
