@@ -23,6 +23,10 @@
                 {
                     "name": "AWS_COGNITO_CLIENT_ID",
                     "value": ""
+                },
+                {
+                    "name": "AWS_S3_BUCKET_NAME",
+                    "value": "vsingh57-fragments"
                 }
             ],
             "environmentFiles": [],

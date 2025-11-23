@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   try {
     const ownerId = req.user
     const fragments = await Fragment.byUser(ownerId);
+    
     res.status(200).json(
       createSuccessResponse({
         fragments,

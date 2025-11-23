@@ -87,9 +87,11 @@ class Fragment {
   static async byId(ownerId, id) {
     const fragment = await readFragment(ownerId, id);
     if (!fragment) {
-      logger.error(`Fragment ${id} for user ${ownerId} not found`);
-      throw new Error('not found');
+      const err = new Error(`Fragment ${id} for user ${ownerId} not found`);
+      err.statusCode = 404;
+      throw err;
     }
+
     return new Fragment(fragment);
   }
 

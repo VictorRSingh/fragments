@@ -22,6 +22,12 @@ module.exports = async (req, res) => {
     res.status(200).send(data);
 
   } catch (err) {
+    if(err.statusCode === 404) {
+      return res.status(404).json({
+        status: 'error',
+        error: { code: 404, message: 'fragment not found' }
+      });
+    }
     res.status(500).json({ status: 'error', message: err.message });
   }
 };

@@ -26,4 +26,7 @@ router.get('/fragments/:id', require('./getById'));
 // POST /v1/fragments
 router.post('/fragments', rawBody(), require('./post'));
 
+// DELETE /v1/fragments/:id
+router.delete('/fragments/:id', require('./delete'));
+
 module.exports = router;
