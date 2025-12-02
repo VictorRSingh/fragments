@@ -132,9 +132,16 @@ class Fragment {
   async setData(data) {
     // TIP: make sure you update the metadata whenever you change the data, so they match
     logger.info(`Setting data for fragment ${this.id} for user ${this.ownerId}`);
-    this.size = data.length;
+
+    if(typeof data === 'string') {
+      data = data.replace(/\r\n/g, '\n');
+    }
+    
+    const buffer = Buffer.from(data);
+
+    this.size = buffer.length;
     this.updated = new Date().toISOString();
-    await writeFragmentData(this.ownerId, this.id, Buffer.from(data));
+    await writeFragmentData(this.ownerId, this.id, buffer);
     await this.save();
   }
 
