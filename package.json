@@ -13,7 +13,7 @@
     "dev": "node --env-file=.env --watch ./src/index.js",
     "debug": "node --env-file=.env --inspect=0.0.0.0:9229 --watch ./src/index.js",
     "docker-start": "node src/index.js",
-    "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\""
+    "test:integration": "hurl --test --glob \"tests/integration/lab-10-dynamodb.hurl\""
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,9 @@
   },
   "homepage": "https://github.com/VictorRSingh/fragments#readme",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.940.0",
     "@aws-sdk/client-s3": "^3.937.0",
+    "@aws-sdk/lib-dynamodb": "^3.940.0",
     "aws-jwt-verify": "^5.1.0",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
