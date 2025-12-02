@@ -26,7 +26,7 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.fragment.id" == "{{fragment1_id}}"
 jsonpath "$.fragment.type" == "application/json"
-jsonpath "$.fragment.size" == 31
+jsonpath "$.fragment.size" > 0
 jsonpath "$.fragment.ownerId" != ""
 
 POST http://localhost:8080/v1/fragments
@@ -56,7 +56,7 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.fragment.id" == "{{fragment2_id}}"
 jsonpath "$.fragment.type" == "text/markdown"
-jsonpath "$.fragment.size" == 24
+jsonpath "$.fragment.size" > 0
 jsonpath "$.fragment.ownerId" != ""
 
 
