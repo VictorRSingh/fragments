@@ -1,6 +1,5 @@
 const { Fragment } = require('../../model/fragment');
 const sharp = require('sharp');
-
 const logger = require('../../logger');
 
 module.exports = async (req, res) => {
@@ -8,13 +7,18 @@ module.exports = async (req, res) => {
   const fragmentId = req.params.id;
   const ext = req.params.ext;
 
-  logger.info(`Route params: ${JSON.stringify(req.params)}`);
-  logger.info(`Fragment ID: ${fragmentId}, Requested extension: ${ext}, Owner: ${ownerId}`);
-
   const fragment = await Fragment.byId(ownerId, fragmentId);
+
+  if (!fragment) {
+    return res.status(404).json({
+      status: 'error',
+      error: { code: 404, message: 'fragment not found' },
+    });
+  }
 
   const data = await fragment.getData();
 
+  // Image conversion
   if (fragment.type.startsWith('image/')) {
     try {
       const outputBuffer = await sharp(data).toFormat(ext).toBuffer();
@@ -28,30 +32,28 @@ module.exports = async (req, res) => {
         error: { code: 415, message: 'unsupported media type for conversion' },
       });
     }
-  } else if (fragment.type.startsWith('text/')) {
+  }
+
+  // Text conversion
+  if (fragment.type.startsWith('text/')) {
     const input = data.toString();
 
-    if (fragment.type === 'text/plain') {
-      if (ext === 'plain') {
+    switch (ext) {
+      case 'plain':
         return res.status(200).type('text/plain').send(input);
-      }
-      if (ext === 'html') {
-        const htmlOutput = `<html><body><pre>${input}</pre></body></html>`;
-        return res.status(200).type('text/html').send(htmlOutput);
-      }
-      if (ext === 'md') {
+      case 'html':
+        return res.status(200).type('text/html').send(`<html><body><pre>${input}</pre></body></html>`);
+      case 'md':
         return res.status(200).type('text/plain').send(input);
-      } else {
+      default:
         return res.status(415).json({
           status: 'error',
           error: { code: 415, message: 'unsupported media type for conversion' },
         });
-      }
     }
-  } else {
-    return res.status(404).json({
-      status: 'error',
-      error: { code: 404, message: 'fragment not found' },
-    });
   }
+  return res.status(415).json({
+    status: 'error',
+    error: { code: 415, message: 'unsupported media type for conversion' },
+  });
 };

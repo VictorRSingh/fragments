@@ -15,7 +15,7 @@ const {
 } = require('./data');
 const logger = require('../logger');
 
-const supportedTypes = ['text/*', 'application/json', 'image/*'];
+const supportedTypes = ['text/*', 'application/json', 'image/png', 'image/jpg', 'image/webp', 'image/gif'];
 
 class Fragment {
   id = randomUUID();
