@@ -1,5 +1,6 @@
 services:
   fragments:
+    container_name: fragments
     init: true
     build: .
 
