@@ -133,7 +133,7 @@ async function listFragments(ownerId, expand = false) {
 //   }
 // }
 
-function deleteFragment(ownerId, id) {
+async function deleteFragment(ownerId, id) {
   const paramsS3 = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: `${ownerId}/${id}`,
@@ -147,8 +147,8 @@ function deleteFragment(ownerId, id) {
   const commandDynamo = new DeleteCommand(paramsDynamo);
 
   try {
-    const resultdb = ddbDocClient.send(commandDynamo);
-    const results3 = s3Client.send(commandS3);
+    const resultdb = await ddbDocClient.send(commandDynamo);
+    const results3 = await s3Client.send(commandS3);
     return Promise.all([resultdb, results3]);
   } catch (err) {
     const { Bucket, Key } = paramsS3;
