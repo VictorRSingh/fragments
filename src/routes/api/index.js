@@ -28,6 +28,9 @@ router.get('/fragments/:id', require('./getById'));
 // POST /v1/fragments
 router.post('/fragments', rawBody(), require('./post'));
 
+// PUT /v1/fragments/:id
+router.put('/fragments/:id', rawBody(), require('./put'));
+
 // DELETE /v1/fragments/:id
 router.delete('/fragments/:id', require('./delete'));
 
